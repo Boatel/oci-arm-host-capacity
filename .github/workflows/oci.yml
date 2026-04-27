@@ -13,7 +13,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-  
+          
+      - name: Install dependencies
+        run: composer install --no-dev --prefer-dist
       - name: Run script
         run: php index.php
         env:
