@@ -1,14 +1,13 @@
 name: Create OCI instance
 on:
-  schedule:
-    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
   create-instance:
     runs-on: ubuntu-latest
+    timeout-minutes: 300
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -40,5 +39,10 @@ jobs:
           TELEGRAM_USER_ID=${{ secrets.TELEGRAM_USER_ID }}
           EOF
 
-      - name: Run script
-        run: php index.php
+      - name: Loop until instance created
+        run: |
+          while true; do
+            php index.php && break
+            echo "Retrying in 60s..."
+            sleep 60
+          done
