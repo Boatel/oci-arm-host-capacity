@@ -44,9 +44,9 @@ jobs:
           while true; do
             output=$(php index.php 2>&1)
             echo "$output"
-            if echo "$output" | grep -q "Out of host capacity\|InternalError\|NotAuthorizedOrNotFound"; then
-              echo "Retrying in 60s..."
-              sleep 60
+            if echo "$output" | grep -q "Out of host capacity\|InternalError\|NotAuthorizedOrNotFound\|TooManyRequests"; then
+              echo "Retrying in 90s..."
+              sleep 90
             else
               break
             fi
